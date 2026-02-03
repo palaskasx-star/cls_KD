@@ -6,7 +6,8 @@ from .wsld import  WSLDLoss
 from .kd import KDLoss
 from .vitkd import ViTKDLoss
 from .uskd import USKDLoss
+from .mf import MFLoss
 
 __all__ = [
-    'MGDLoss', 'DKDLoss', 'NKDLoss', 'SRRLLoss', 'WSLDLoss', 'KDLoss', 'ViTKDLoss', 'USKDLoss'
+    'MGDLoss', 'DKDLoss', 'NKDLoss', 'SRRLLoss', 'WSLDLoss', 'KDLoss', 'ViTKDLoss', 'USKDLoss', 'MFLoss'
 ]
