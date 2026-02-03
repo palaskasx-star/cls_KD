@@ -142,11 +142,20 @@ class MFLoss(nn.Module):
         total_loss_koleo_d = 0.0
         total_loss_koleo_p = 0.0
 
+        s_low = preds_S[0]
+        s_high = preds_S[1]
+        
+        t_low = preds_T[0]
+        t_high = preds_T[1]
+
+        feats_S = [s_low[:, 0], s_low[:, 1], s_high]
+        feats_T = [t_low[:, 0], t_low[:, 1], t_high]
+
         # Loop 3 times for indices 0, 1, and -1
         for i, layer_idx in enumerate(self.target_indices):
             
-            F_s = preds_S[layer_idx]
-            F_t = preds_T[layer_idx]
+            F_s = feats_S[layer_idx]
+            F_t = feats_T[layer_idx]
 
             print(F_s.shape)
             
