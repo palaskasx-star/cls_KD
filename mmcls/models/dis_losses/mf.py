@@ -90,7 +90,7 @@ class MFLoss(nn.Module):
                  K=6304,                 # Number of prototypes
                  temperature=0.1,
                  sinkhorn_iters=3,
-                 normalize_input=False,
+                 normalize_input=True,
                  weight_mf=1.0,          # Weight for Main Manifold Loss
                  weight_koleo_data=0.0,  # Weight for KoLeo Data Loss
                  weight_koleo_proto=0.0, # Weight for KoLeo Proto Loss
@@ -142,7 +142,7 @@ class MFLoss(nn.Module):
 
         # Loop 3 times for indices 0, 1, and -1
         for i, layer_idx in enumerate(self.target_indices):
-            
+            print(preds_S.shape)
             F_s = preds_S[layer_idx]
             F_t = preds_T[layer_idx]
             
