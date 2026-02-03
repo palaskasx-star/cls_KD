@@ -120,7 +120,7 @@ class MFLoss(nn.Module):
 
         for _ in range(3):
             # Projector: Student Dim -> Teacher Dim
-            self.projectors.append(nn.Linear(student_dims, teacher_dims))
+            self.projectors.append(nn.Linear(student_dims, teacher_dims, bias=False))
             
             # Prototypes: (K, Teacher Dim)
             proto = torch.empty(K, teacher_dims)
