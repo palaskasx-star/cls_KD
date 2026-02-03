@@ -69,6 +69,19 @@ model = dict(
                                        )
                                 ]
                         ),
+                    dict(methods=[dict(type='MFLoss',
+                                        name='loss_mf',
+                                        use_this = mf,
+                                        K=6304,
+                                        temperature=0.1,
+                                        sinkhorn_iters=3,
+                                        normalize_input=True,
+                                        weight_mf=1.0,
+                                        weight_koleo_data=0.0,
+                                        weight_koleo_proto=0.0,
+                                        )
+                                ]
+                        ),
 
                    ]
     )
