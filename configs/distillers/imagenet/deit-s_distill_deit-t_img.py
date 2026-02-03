@@ -14,7 +14,7 @@
     kd = False
     nkd = True
     vitkd = True
-    mf = True
+    mf = False
 
     # method details
     model = dict(
