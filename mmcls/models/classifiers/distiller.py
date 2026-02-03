@@ -140,6 +140,10 @@ class ClassificationDistiller(BaseModel, metaclass=ABCMeta):
                 loss_name = 'loss_vitkd'
                 s_loss[loss_name] = self.distill_losses[loss_name](fea_s[-1][0], fea_t[-1][0]) 
 
+            if 'loss_mf' in all_keys:
+                loss_name = 'loss_mf'
+                s_loss[loss_name] = self.distill_losses[loss_name](fea_s[-1][0], fea_t[-1][0]) 
+
             if ('loss_srrl' in all_keys) and self.use_logit:
                 loss_name = 'loss_srrl'
                 fea_s_align = self.distill_losses[loss_name].Connectors(fea_s[-1])
