@@ -85,6 +85,8 @@ class MFLoss(nn.Module):
     Applied to the First (0), Second (1), and Last (-1) layers using identical dimensions.
     """
     def __init__(self,
+                 name,
+                 use_this,
                  student_dims,           # int: Dimension of student features (same for all layers)
                  teacher_dims,           # int: Dimension of teacher features (same for all layers)
                  K=6304,                 # Number of prototypes
