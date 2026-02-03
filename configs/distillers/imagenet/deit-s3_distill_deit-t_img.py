@@ -13,7 +13,8 @@ wsld = False
 dkd = False
 kd = False
 nkd = True
-vitkd = True
+vitkd = False
+mf = True
 
 # method details
 model = dict(
