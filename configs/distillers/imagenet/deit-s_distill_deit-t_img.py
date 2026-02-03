@@ -13,8 +13,8 @@
     dkd = False
     kd = False
     nkd = True
-    vitkd = True
-    mf = False
+    vitkd = False
+    mf = True
 
     # method details
     model = dict(
