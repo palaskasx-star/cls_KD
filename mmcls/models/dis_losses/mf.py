@@ -144,9 +144,11 @@ class MFLoss(nn.Module):
 
         # Loop 3 times for indices 0, 1, and -1
         for i, layer_idx in enumerate(self.target_indices):
-            print(preds_S.shape)
+            
             F_s = preds_S[layer_idx]
             F_t = preds_T[layer_idx]
+
+            print(F_s.shape)
             
             # 1. Normalize Prototypes (In-place)
             with torch.no_grad():
