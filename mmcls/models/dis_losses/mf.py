@@ -156,8 +156,6 @@ class MFLoss(nn.Module):
             
             F_s = feats_S[layer_idx]
             F_t = feats_T[layer_idx]
-
-            print(F_s.shape)
             
             # 1. Normalize Prototypes (In-place)
             with torch.no_grad():
