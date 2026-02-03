@@ -73,6 +73,8 @@ model = dict(
                     dict(methods=[dict(type='MFLoss',
                                         name='loss_mf',
                                         use_this = mf,
+                                        student_dims = 192,
+                                        teacher_dims = 384,
                                         K=6304,
                                         temperature=0.1,
                                         sinkhorn_iters=3,
@@ -81,6 +83,7 @@ model = dict(
                                         weight_koleo_data=0.0,
                                         weight_koleo_proto=0.0,
                                         )
+
                                 ]
                         ),
 
