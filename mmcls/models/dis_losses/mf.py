@@ -111,7 +111,7 @@ class MFLoss(nn.Module):
         self.weight_koleo_proto = weight_koleo_proto
 
         # Specifically targeting: First, Second, and Last layers
-        self.target_indices = [0, 1, -1]
+        self.target_indices = 3
         
         # Initialize 3 separate Projectors and 3 separate sets of Prototypes
         # Since dims are the same, we just repeat the logic 3 times.
@@ -152,10 +152,9 @@ class MFLoss(nn.Module):
         feats_T = [t_low[:, 0], t_low[:, 1], t_high]
 
         # Loop 3 times for indices 0, 1, and -1
-        for i, layer_idx in enumerate(self.target_indices):
-            
-            F_s = feats_S[layer_idx]
-            F_t = feats_T[layer_idx]
+        for i in len(self.target_indices):
+            F_s = feats_S[i]
+            F_t = feats_T[i]
             
             # 1. Normalize Prototypes (In-place)
             with torch.no_grad():
@@ -216,7 +215,7 @@ class MFLoss(nn.Module):
         # Final weighted sum
         final_loss = (self.weight_mf * total_loss_mf + 
                       self.weight_koleo_data * total_loss_koleo_d + 
-                      self.weight_koleo_proto * total_loss_koleo_p) / (i+1)
+                      self.weight_koleo_proto * total_loss_koleo_p) / self.target_indices
 
         return final_loss
         
