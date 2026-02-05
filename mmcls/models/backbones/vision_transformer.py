@@ -439,14 +439,14 @@ class VisionTransformer(BaseBackbone):
                 x = self.norm1(x)
 
             if  i in [1]:
-                low_f_s = x[:,1:]
+                low_f_s = x[
                 low_f = torch.cat((low_f, low_f_s.unsqueeze(1)),dim=1)
             elif i == 0:
-                low_f = x[:,1:]
+                low_f = x
                 low_f = low_f.unsqueeze(1)
 
             if  i == len(self.layers) - 1:
-                high_f = x[:,1:]
+                high_f = x
 
             if i == int(0.5*len(self.layers)) - 1:
                 mid_token = x[:, 0]
