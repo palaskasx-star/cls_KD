@@ -209,9 +209,9 @@ class MFLoss(nn.Module):
             l_mf = (loss12 + loss21) / 2
 
             # Aggregate
-            total_loss_mf += l_mf
-            total_loss_koleo_d += l_koleo_d
-            total_loss_koleo_p += l_koleo_p
+            total_loss_mf += l_mf/3
+            total_loss_koleo_d += l_koleo_d/3
+            total_loss_koleo_p += l_koleo_p/3
 
         # Final weighted sum
         final_loss = (self.weight_mf * total_loss_mf + 
