@@ -219,3 +219,4 @@ class MFLoss(nn.Module):
                       self.weight_koleo_proto * total_loss_koleo_p) / (i+1)
 
         return final_loss
+        
