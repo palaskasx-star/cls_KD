@@ -197,7 +197,7 @@ class MFLoss(nn.Module):
         feats_T = [t_low[:, 0], t_low[:, 1], t_high]
 
         # Loop 3 times for indices 0, 1, and -1
-        for i in len(self.target_indices):
+        for i in range(self.target_indices):
             F_s = feats_S[i]
             F_t = feats_T[i]
             
