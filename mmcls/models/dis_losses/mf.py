@@ -133,6 +133,51 @@ class MFLoss(nn.Module):
         self.koleo_proto_loss = KoLeoLossPrototypes()
 
     def forward(self, preds_S, preds_T):
+
+    # ================== DEBUGGING BLOCK START ==================
+    # Only print on the main process (Rank 0) to avoid messy logs
+    rank = 0
+    if dist.is_initialized():
+        rank = dist.get_rank()
+        
+    if rank == 0:
+        print(f"\n[DEBUG] MFLoss Parameter Check:")
+        # Initialize storage for previous weights if it doesn't exist
+        if not hasattr(self, 'debug_weights'):
+            self.debug_weights = {}
+
+        # Iterate over the 3 layers
+        for i in range(len(self.projectors)):
+            # Get current weights (Data only, no gradients)
+            curr_proj = self.projectors[i].weight.data
+            curr_proto = self.prototypes[i].data
+
+            # 1. Print Mean and Std
+            print(f"  Layer {i} | Projector : Mean {curr_proj.mean():.6f} | Std {curr_proj.std():.6f}")
+            print(f"  Layer {i} | Prototypes: Mean {curr_proto.mean():.6f} | Std {curr_proto.std():.6f}")
+
+            # 2. Check for updates (compare with previous step)
+            if f'proj_{i}' in self.debug_weights:
+                prev_proj = self.debug_weights[f'proj_{i}']
+                prev_proto = self.debug_weights[f'proto_{i}']
+
+                # Calculate absolute difference
+                diff_proj = (curr_proj - prev_proj).abs().sum().item()
+                diff_proto = (curr_proto - prev_proto).abs().sum().item()
+
+                # Print status
+                # Note: Small diffs (e.g., 0.0001) mean it IS updating. 0.0 means it is FROZEN.
+                status_proj = "UPDATED" if diff_proj > 1e-9 else "FROZEN (Check Optimizer!)"
+                status_proto = "UPDATED" if diff_proto > 1e-9 else "FROZEN (Check Optimizer!)"
+
+                print(f"    -> Proj Diff: {diff_proj:.8f} [{status_proj}]")
+                print(f"    -> Proto Diff: {diff_proto:.8f} [{status_proto}]")
+
+            # 3. Store current weights for the next forward pass
+            self.debug_weights[f'proj_{i}'] = curr_proj.clone()
+            self.debug_weights[f'proto_{i}'] = curr_proto.clone()
+        print("========================================================\n")
+        # ================== DEBUGGING BLOCK END ==================
         """
         Args:
             preds_S (List[Tensor]): Student features list.
@@ -218,4 +263,3 @@ class MFLoss(nn.Module):
                       self.weight_koleo_proto * total_loss_koleo_p) / self.target_indices
 
         return final_loss
-        
